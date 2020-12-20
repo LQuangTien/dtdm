@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      .wordspace {
+        word-spacing: 12px;
+        text-align: left;
+      }
+      table td,
+      table th {
+        padding: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="createDocker()">Tao docker</button>
+    <form id="formRun" action="/run" method="post">
+      <select name="imageName">
+        <option value="ubuntu:18.04">ubuntu</option>
+        <option value="hello-world">hello world</option>
+      </select>
+      <input type="submit" >Runnnnnnn Container</input>
+    </form>
+    <form id="formStop" action="/stop" method="post">
+      <select name="containerName">
+        <option value="ubuntu">ubuntu</option>
+        <option value="helloworld">hello world</option>
+      </select>
+      <input type="submit" >Stopppp Container nèeeeeee</input>
+    </form>
+    <button onclick="getImages()">Xem danh sach image</button>
+    <button onclick="getContainers()">Xem danh sach container dang chay</button>
+    <div id="test"></div>
+  </body>
+  <script>
+    document.getElementById('formRun').addEventListener('onsubmit', 
+      function(event){
+        event.preventDefault()
+    });
+    
+    document.getElementById('formStop').addEventListener('onsubmit', 
+      function(event){
+        event.preventDefault()
+    });
+    function runDocker() {
+      document.getElementById("test").innerHTML = "";
+      fetch("http://localhost:3000/run")
+        .then((res) => res.json())
+        .then((data) => {
+          data.split("\n").forEach((text) => {
+            let newP = document.createElement("p");
+            newP.innerHTML = text;
+            document.getElementById("test").appendChild(newP);
+          });
+        });
+    }
+    function stopContainer () {
+      fetch("http://localhost:3000/stop")
+    }
+
+    function getContainers() {
+      document.getElementById("test").innerHTML = "";
+      fetch("http://localhost:3000/containers")
+        .then((res) => res.json())
+        .then((data) => {
+          let newData = data.split("\n");
+          newData.pop();
+          newData.slice(1).forEach((container) => {
+            const name = container.split(" ").slice(-1);
+            let p = createNewElement("p", name);
+            document.getElementById("test").appendChild(p);
+          });
+        });
+    }
+    function getImages() {
+      document.getElementById("test").innerHTML = "";
+      fetch("http://localhost:3000/images")
+        .then((res) => res.json())
+        .then((data) => {
+          let table = document.createElement("table");
+          let tableHeader = document.createElement("tr");
+          ["REPOSITORY", "TAG", "IMAGE ID", "CREATED", "SIZE"].forEach(
+            (header) => {
+              const headerContent = createNewElement("th", header);
+              tableHeader.appendChild(headerContent);
+            }
+          );
+          table.appendChild(tableHeader);
+          let newData = data.split("\n");
+          newData.pop();
+          newData.slice(1).forEach((text) => {
+            let content = text.split(" ").filter((content) => content);
+            console.log(content);
+            let newRow = document.createElement("tr");
+            [
+              content[0],
+              content[1],
+              content[2],
+              `${content[3]} ${content[4]} ${content[5]}`,
+              content[6],
+            ].forEach((item) => {
+              const newCol = createNewElement("td", item);
+              newRow.appendChild(newCol);
+            });
+            table.appendChild(newRow);
+          });
+          document.getElementById("test").appendChild(table);
+        });
+    }
+    function createNewElement(element, content) {
+      let newEle = document.createElement(element);
+      let newEleContent = document.createTextNode(content);
+      newEle.appendChild(newEleContent);
+      return newEle;
+    }
+  </script>
+</html>
