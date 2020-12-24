@@ -50,7 +50,7 @@ app.post("/stop", (req, res) => {
 });
 
 app.get("/images", (req, res) => {
-  exec("docker image ls", (err, stdout, stderr) => {
+  exec("sudo docker image ls", (err, stdout, stderr) => {
     return res.json(stdout);
   });
 });

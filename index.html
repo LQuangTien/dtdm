@@ -134,7 +134,6 @@
     
     
     
-              <form id="formRun" action="/run" method="post">
                 <div class="form-row">
                   <div class="col-12">
                     <label for="selImageName">
@@ -148,14 +147,12 @@
                     </select>
                   </div>
                   <div class="form-group col-3">
-                    <button id="btnRunCon" class="btn btn-warning" type="submit"><i
+                    <button id="btnRunCon" class="btn btn-warning" onclick='runDocker()'><i
                         class="fa fa-charging-station"></i></i></button>
                   </div>
                 </div>
     
-              </form>
     
-              <form id="formStop" action="/stop" method="post">
                 <div class="form-row">
                   <div class="col-12">
                     <label for="selContainerName">
@@ -163,18 +160,17 @@
                     </label>
                   </div>
                   <div class="form-group col-9">
-                    <select name="containerName" class="form-control">
+                    <select id='containerName' name="containerName" class="form-control">
                       <option value="ubuntu">ubuntu</option>
                       <option value="helloworld">hello world</option>
                     </select>
                   </div>
                   <div class="form-group col-3">
-                    <button type="submit" class="btn btn-danger" id="btnShutCon"><i class="fa fa-times"></i></button>
+                    <button onclick='stopContainer()' class="btn btn-danger" id="btnShutCon"><i class="fa fa-times"></i></button>
                   </div>
                 </div>
     
     
-              </form>
               <div class="btnDanhSach pt-1">
                 <!-- <h2>Danh sách</h2> -->
                 <div class="form-group">
@@ -193,8 +189,22 @@
         <div id="test" style="margin-top: 250px;"></div>
       </div>
     </div>
+    <div class="row" >
+      <div class="col-12">
+    <label for="username">username</label>
+    <input id='username' placeholder='long' />
+    <label for="password">password</label>
+    <input id='password' placeholder='1'/>
+    <button onclick='createUser()'>BAM VO DAY DE TAO USER</button>
 
+      </div>
 
+      <div class="col-12">
+        <input id='deluser' placeholder='long'/>
+    <button onclick='deleteUser()'>BAM VO DAY DE XOA USER (DUNG USERNAME DA TAO THI MOI XOA DUOC)</button>
+      </div>
+      </div>
+    </div>
 
 
   </section>
@@ -207,19 +217,59 @@
     crossorigin="anonymous"></script>
 </body>
 <script>
-  document.getElementById('formRun').addEventListener('onsubmit',
-    function (event) {
-      event.preventDefault()
-    });
-
-  document.getElementById('formStop').addEventListener('onsubmit',
-    function (event) {
-      event.preventDefault()
-    });
-  function runDocker() {
-    document.getElementById("test").innerHTML = "";
+  function deleteUser() {
+    const username = document.getElementById('deluser').value
+    document.getElementById("test").innerHTML = "VUI LONG CHO XOA USER";
   
-    fetch("http://localhost:3000/run")
+    fetch("http://localhost:3000/deleteuser",{
+       method: 'POST',
+        headers: {
+    'Content-Type': 'application/json',
+  },
+      body: JSON.stringify({username}),
+})
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        data.split('\n').forEach((text) => {
+          let newP = document.createElement("p");
+          newP.innerHTML = text;
+          document.getElementById("test").appendChild(newP);
+        })
+        });
+  }
+  function createUser() {
+    const username = document.getElementById('username').value
+    const password = document.getElementById('password').value
+    document.getElementById("test").innerHTML = "VUI LONG CHO TAO USER";
+  
+    fetch("http://localhost:3000/createuser",{
+       method: 'POST',
+        headers: {
+    'Content-Type': 'application/json',
+  },
+      body: JSON.stringify({username, password}),
+})
+      .then((res) => res.json())
+      .then((data) => {
+          let newP = document.createElement("p");
+          newP.innerHTML = "USER "+ data + "DA DUOC TAO";
+          document.getElementById("test").appendChild(newP);
+        });
+  }
+  function runDocker() {
+
+    const imageName = document.getElementById('selImageName').value
+    console.log(imageName)
+    document.getElementById("test").innerHTML = "VUI LONG CHO CONTAINER CHAY";
+  
+    fetch("http://localhost:3000/run",{
+       method: 'POST',
+        headers: {
+    'Content-Type': 'application/json',
+  },
+      body: JSON.stringify({imageName}),
+})
       .then((res) => res.json())
       .then((data) => {
         data.split("\n").forEach((text) => {
@@ -230,7 +280,21 @@
       });
   }
   function stopContainer() {
-    fetch("http://localhost:3000/stop")
+    document.getElementById("test").innerHTML = "VUI LONG CHO CONTAINER TAT, CHO TOI KHI HIEN RA THEM 1 DONG` NUA`";
+    const containerName = document.getElementById('containerName').value
+    fetch("http://localhost:3000/stop",{
+       method: 'POST', // or 'PUT'
+        headers: {
+    'Content-Type': 'application/json',
+  },
+      body: JSON.stringify({containerName}),
+})
+.then(response => response.json())
+.then(data => {
+          let newP = document.createElement("p");
+          newP.innerHTML = data;
+          document.getElementById("test").appendChild(newP);
+})
   }
 
   function getContainers() {
@@ -266,7 +330,6 @@
         newData.pop();
         newData.slice(1).forEach((text) => {
           let content = text.split(" ").filter((content) => content);
-          console.log(content);
           let newRow = document.createElement("tr");
           [
             content[0],
