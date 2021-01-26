@@ -2,356 +2,483 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Docker</title>
-  <!-- Link CDN BS4  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <!-- Link Fontawesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
-    crossorigin="anonymous" />
-  <!-- <link rel="stylesheet" href="./index.css"> -->
-  <!-- Link animate -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<meta charset="UTF-8" />
+	<title>Docker</title>
+	<!-- Link CDN BS4  -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+		integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<!-- Link Fontawesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+		integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+		crossorigin="anonymous" />
+	<!-- <link rel="stylesheet" href="./index.css"> -->
+	<!-- Link animate -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <style>
-  body,
-  html {
-    height: 100%;
-  }
+	body {
+		background: #f9f9f9;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		color: black;
+		/* margin: 0; */
+		padding: 0;
+	}
+
+	.wrap__main {
+		padding: 18px 24px;
+	}
+
+	.wrap__form {
+		background: white;
+		padding-top: 40px;
+		box-shadow: 0 0 12px 1px #d8d8d8;
+		border-radius: 15px;
+		padding: 10px;
+		margin-bottom: 30px;
+	}
+
+	.wrap__form .form__content {
+		width: 95%;
+		margin: 4px auto;
+	}
+
+	#test {
+		margin: 72px auto;
+		width: 65%;
+	}
 
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    color: white;
-    /* margin: 0; */
-    padding: 0;
-  }
+
+	.wordspace {
+		word-spacing: 12px;
+		text-align: left;
+	}
+
+	table td,
+	table th {
+		padding: 12px;
+	}
 
 
+	.loader-wrapper {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: #242f3f;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
+	.loader {
+		display: inline-block;
+		width: 30px;
+		height: 30px;
+		position: relative;
+		border: 4px solid #Fff;
+		animation: loader 2s infinite ease;
+	}
 
-  .background__main {
-    background-image: linear-gradient(to right, #e78282, #ffff8f);
-    height: 100%;
-  }
+	.loader-inner {
+		vertical-align: top;
+		display: inline-block;
+		width: 100%;
+		background-color: #fff;
+		animation: loader-inner 2s infinite ease-in;
+	}
 
-  .background__main .wrap__out {
-    position: absolute;
+	@keyframes loader {
+		0% {
+			transform: rotate(0deg);
+		}
 
-    left: 20%;
-    margin-top: 100px;
-    width: 500px;
-    height: 500px;
-    border: 2px solid black;
-    border-radius: 20px;
-  }
+		25% {
+			transform: rotate(180deg);
+		}
 
-  .wrap__main {
-    padding: 20px;
-    width: 100%;
-  }
+		50% {
+			transform: rotate(180deg);
+		}
 
-  .wrap__main h2 {
-    text-align: center;
-    color: white;
-  }
+		75% {
+			transform: rotate(360deg);
+		}
 
-  .wrap__main h2 i {
-    padding-left: 10px;
-  }
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 
-  .wrap__form {
-    padding: 10px;
-    padding-top: 40px;
-  }
+	@keyframes loader-inner {
+		0% {
+			height: 0%;
+		}
 
+		25% {
+			height: 0%;
+		}
 
-  #btnRunCon i {
-    font-size: 20px;
-    color: white;
-    /* transform: rotate(32deg); */
-    /* line-height: 34px; */
-  }
+		50% {
+			height: 100%;
+		}
 
-  #btnRunCon:hover {
-    background-color: azure;
-  }
+		75% {
+			height: 100%;
+		}
 
-  #btnRunCon:hover i {
-
-    animation: tada;
-    /* referring directly to the animation's @keyframe declaration */
-    animation-duration: 1s;
-    /* don't forget to set a duration! */
-    color: #ffc107;
-
-  }
-
-  #btnShutCon i {
-    font-size: 20px;
-  }
-
-  #btnShutCon:hover {
-    background-color: azure;
-  }
-
-  #btnShutCon:hover i {
-    animation: jello;
-    animation-duration: 1s;
-    animation-delay: 0.1s;
-    color: #dc3545;
-  }
-
-
-  .wordspace {
-    word-spacing: 12px;
-    text-align: left;
-  }
-
-  table td,
-  table th {
-    padding: 12px;
-  }
+		100% {
+			height: 0%;
+		}
+	}
 </style>
 
 <body>
-  <section class="background__main">
-    <div class="row">
-      <div class="col-6 position-relative">
-        <section class="wrap__out  animate__animated animate__flipInX ">
-          <section class="wrap__main ">
-            <h2>Cloud Computing <span><i class="fa fa-cloud"></i></span></h2>
-            <div class="wrap__form">
-              <div class="form-group">
-                <button class="btn btn-success w-100" onclick="createDocker()">Tạo docker <i
-                    class="fa fa-plus"></i></button>
-              </div>
-    
-    
-    
-                <div class="form-row">
-                  <div class="col-12">
-                    <label for="selImageName">
-                      <h5>Khởi động container</h5>
-                    </label>
-                  </div>
-                  <div class="form-group col-9">
-                    <select id="selImageName" name="imageName" class="form-control">
-                      <option value="ubuntu:18.04">ubuntu</option>
-                      <option value="hello-world">hello world</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-3">
-                    <button id="btnRunCon" class="btn btn-warning" onclick='runDocker()'><i
-                        class="fa fa-charging-station"></i></i></button>
-                  </div>
-                </div>
-    
-    
-                <div class="form-row">
-                  <div class="col-12">
-                    <label for="selContainerName">
-                      <h5>Tắt container</h5>
-                    </label>
-                  </div>
-                  <div class="form-group col-9">
-                    <select id='containerName' name="containerName" class="form-control">
-                      <option value="ubuntu">ubuntu</option>
-                      <option value="helloworld">hello world</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-3">
-                    <button onclick='stopContainer()' class="btn btn-danger" id="btnShutCon"><i class="fa fa-times"></i></button>
-                  </div>
-                </div>
-    
-    
-              <div class="btnDanhSach pt-1">
-                <!-- <h2>Danh sách</h2> -->
-                <div class="form-group">
-                  <button class="btn btn-info" onclick="getImages()">Danh sách Image</button>
-                </div>
-                <div class="form-group">
-                  <button class="btn btn-info" onclick="getContainers()">Danh sách Container đang chạy</button>
-                </div>
-              </div>
-    
-            </div>
-          </section>
-        </section>
-      </div>
-      <div class="col-6">
-        <div id="test" style="margin-top: 250px;"></div>
-      </div>
-    </div>
-    <div class="row" >
-      <div class="col-12">
-    <label for="username">username</label>
-    <input id='username' placeholder='long' />
-    <label for="password">password</label>
-    <input id='password' placeholder='1'/>
-    <button onclick='createUser()'>BAM VO DAY DE TAO USER</button>
+	<div class="wrap__main">
+		<div class="row">
+			<div class="col-3 wrap__element">
+				<div class="wrap__form">
+					<div class="form__content">
+						<div class="form-group">
+							<input class="form-control" style="width: 48%; display: inline;" type="number" id="ram" name="ram" min="0" placeholder="RAM">
+							<input class="form-control" style="width: 49%; display: inline;"  type="number" id="cpu" name="cpu" min="1" placeholder="CPU">
+							<select id="selImageName" name="imageName" class="form-control">
+								<option value="ubssh">ubuntu</option>
+								<option value="hello-world">hello world</option>
+								<option value="centos">centos</option>
+							</select>
+						</div>
+						<div class="form-group ">
+							<button id="btnRunCon" class="btn btn-success w-100" onclick='runDocker()'>Run
+								Container</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-3 wrap__element">
+				<div class="wrap__form">
+					<div class="form__content">
+						<div class="form-group">
+							<label for="selContainerName">Tắt container</label>
+							<select id='containerName' name="containerName" class="form-control">
+								<option value="ubuntussh">ubuntu</option>
+								<option value="helloworld">hello world</option>
+								<option value="cent">centos</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<button onclick='stopContainer()' class="btn btn-danger w-100" id="btnShutCon">Stop
+								Container</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-3 wrap__element">
+				<div class="wrap__form">
+					<div class="form__content">
+						<div class="form-row">
+							<div class="col-12">
+								<label for="username">Tạo User </label>
+							</div>
+							<div class="form-group col-6">
 
-      </div>
+								<input class="form-control" id='username' placeholder='User name' />
 
-      <div class="col-12">
-        <input id='deluser' placeholder='long'/>
-    <button onclick='deleteUser()'>BAM VO DAY DE XOA USER (DUNG USERNAME DA TAO THI MOI XOA DUOC)</button>
-      </div>
-      </div>
-    </div>
+							</div>
+							<div class="form-group col-6">
 
 
-  </section>
-  <!-- Link JS BS4  -->
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"
-    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+								<input class="form-control" id='password' type="password" placeholder='Password' />
+							</div>
+						</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-    crossorigin="anonymous"></script>
+						<div class="form-group ">
+							<button class="btn btn-success w-100" onclick='createUser()'>Tạo</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-3 wrap__element">
+				<div class="wrap__form">
+					<div class="form__content">
+						<div class="form-group">
+							<label for="deluser">Xóa User</label>
+							<input class="form-control" id='deluser' placeholder='User name ' />
+						</div>
+						<div class="form-group">
+							<button class="btn  btn-danger w-100" onclick='deleteUser()'>Xóa</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-9 wrap__element">
+				<div class="wrap__form">
+					<div class="wrap__content">
+						<div class="d-flex justify-content-around">
+							<!-- <h2>Danh sách</h2> -->
+							<button class="btn btn-info" onclick="getImages()">Danh sách Image</button>
+							<button class="btn btn-info" onclick="getContainers()">Danh sách Container đang
+								chạy</button>
+
+						</div>
+						<div class="" style="width: 60%;">
+							<div id="test">
+
+							</div>
+							<div class="loader-wrapper" id="aaaaaaaaaaaa">
+								<span class="loader"><span class="loader-inner"></span></span>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+			<div class="col-3 wrap__element">
+				<div class="wrap__form">
+					<div class="form__content">
+						<div class="form-group">
+							<label for="permission">Dùng Container</label>
+							<input class="form-control" id='permission' placeholder='User name ' />
+						</div>
+						<div class="form-group">
+							<button class="btn  btn-success w-100" onclick='allow()'>Cho Phép</button>
+							<button class="btn  btn-danger w-100 mt-2" onclick='denine()'>Không Cho Phép</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		</section>
+		<!-- Link JS BS4  -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+			integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+			crossorigin="anonymous"></script>
 </body>
 <script>
-  function deleteUser() {
-    const username = document.getElementById('deluser').value
-    document.getElementById("test").innerHTML = "VUI LONG CHO XOA USER";
-  
-    fetch("http://localhost:3000/deleteuser",{
-       method: 'POST',
-        headers: {
-    'Content-Type': 'application/json',
-  },
-      body: JSON.stringify({username}),
-})
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        data.split('\n').forEach((text) => {
-          let newP = document.createElement("p");
-          newP.innerHTML = text;
-          document.getElementById("test").appendChild(newP);
-        })
-        });
-  }
-  function createUser() {
-    const username = document.getElementById('username').value
-    const password = document.getElementById('password').value
-    document.getElementById("test").innerHTML = "VUI LONG CHO TAO USER";
-  
-    fetch("http://localhost:3000/createuser",{
-       method: 'POST',
-        headers: {
-    'Content-Type': 'application/json',
-  },
-      body: JSON.stringify({username, password}),
-})
-      .then((res) => res.json())
-      .then((data) => {
-          let newP = document.createElement("p");
-          newP.innerHTML = "USER "+ data + "DA DUOC TAO";
-          document.getElementById("test").appendChild(newP);
-        });
-  }
-  function runDocker() {
+	$(".loader-wrapper").fadeOut("slow")
+	function allow() {
+		const username = document.getElementById('permission').value
+		document.getElementById("test").innerHTML = "Đang cho phép truy cập vô container";
 
-    const imageName = document.getElementById('selImageName').value
-    console.log(imageName)
-    document.getElementById("test").innerHTML = "VUI LONG CHO CONTAINER CHAY";
-  
-    fetch("http://localhost:3000/run",{
-       method: 'POST',
-        headers: {
-    'Content-Type': 'application/json',
-  },
-      body: JSON.stringify({imageName}),
-})
-      .then((res) => res.json())
-      .then((data) => {
-        data.split("\n").forEach((text) => {
-          let newP = document.createElement("p");
-          newP.innerHTML = text;
-          document.getElementById("test").appendChild(newP);
-        });
-      });
-  }
-  function stopContainer() {
-    document.getElementById("test").innerHTML = "VUI LONG CHO CONTAINER TAT, CHO TOI KHI HIEN RA THEM 1 DONG` NUA`";
-    const containerName = document.getElementById('containerName').value
-    fetch("http://localhost:3000/stop",{
-       method: 'POST', // or 'PUT'
-        headers: {
-    'Content-Type': 'application/json',
-  },
-      body: JSON.stringify({containerName}),
-})
-.then(response => response.json())
-.then(data => {
-          let newP = document.createElement("p");
-          newP.innerHTML = data;
-          document.getElementById("test").appendChild(newP);
-})
-  }
+		fetch("http://localhost:3000/allow", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+				let newP = createNewElement("p", data)
+				document.getElementById("test").appendChild(newP);
+			});
+	}
+	function denine() {
+		const username = document.getElementById('permission').value
+		document.getElementById("test").innerHTML = "Đang xóa quyền truy cập vô container";
 
-  function getContainers() {
-    document.getElementById("test").innerHTML = "";
-    fetch("http://localhost:3000/containers")
-      .then((res) => res.json())
-      .then((data) => {
-        let newData = data.split("\n");
-        newData.pop();
-        newData.slice(1).forEach((container) => {
-          const name = container.split(" ").slice(-1);
-          let p = createNewElement("p", name);
-          document.getElementById("test").appendChild(p);
-        });
-      });
-  }
-  function getImages() {
-    document.getElementById("test").innerHTML = "";
-    document.getElementById("test").classList.add('animate__animated','animate__fadeInRight');
-    fetch("http://localhost:3000/images")
-      .then((res) => res.json())
-      .then((data) => {
-        let table = document.createElement("table");
-        let tableHeader = document.createElement("tr");
-        ["REPOSITORY", "TAG", "IMAGE ID", "CREATED", "SIZE"].forEach(
-          (header) => {
-            const headerContent = createNewElement("th", header);
-            tableHeader.appendChild(headerContent);
-          }
-        );
-        table.appendChild(tableHeader);
-        let newData = data.split("\n");
-        newData.pop();
-        newData.slice(1).forEach((text) => {
-          let content = text.split(" ").filter((content) => content);
-          let newRow = document.createElement("tr");
-          [
-            content[0],
-            content[1],
-            content[2],
-            `${content[3]} ${content[4]} ${content[5]}`,
-            content[6],
-          ].forEach((item) => {
-            const newCol = createNewElement("td", item);
-            newRow.appendChild(newCol);
-          });
-          table.appendChild(newRow);
-        });
-        document.getElementById("test").appendChild(table);
-      });
-  }
-  function createNewElement(element, content) {
-    let newEle = document.createElement(element);
-    let newEleContent = document.createTextNode(content);
-    newEle.appendChild(newEleContent);
-    return newEle;
-  }
+		fetch("http://localhost:3000/denine", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				let newP = createNewElement("p", data)
+				document.getElementById("test").appendChild(newP);
+			});
+	}
+
+	function deleteUser() {
+		const username = document.getElementById('deluser').value
+		document.getElementById("test").innerHTML = "Đang xóa user"
+
+		fetch("http://localhost:3000/deleteuser", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+				data.split('\n').forEach((text) => {
+					let newP = document.createElement("p");
+					newP.innerHTML = text;
+					document.getElementById("test").appendChild(newP);
+				})
+			});
+	}
+	function createUser() {
+		const username = document.getElementById('username').value
+		const password = document.getElementById('password').value
+		document.getElementById("test").innerHTML = "Đang tạo user ...";
+
+		fetch("http://localhost:3000/createuser", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username, password }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data)
+
+				let newP = document.createElement("p");
+				newP.innerHTML = "User " + data + " Đã được tạo";
+				document.getElementById("test").appendChild(newP);
+			});
+	}
+	function runDocker() {
+
+		const imageName = document.getElementById('selImageName').value
+		const ram = document.getElementById('ram').value
+		const cpu = document.getElementById('cpu').value
+		document.getElementById("test").innerHTML = " ";
+		$(".loader-wrapper").fadeIn("slow")
+		fetch("http://localhost:3000/run", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ imageName, ram, cpu }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				let newP = document.createElement("p");
+				// newP.classList.add("initContainer");
+				newP.innerHTML = data + " đã được chạy ";
+				document.getElementById("test").appendChild(newP);
+				$(".loader-wrapper").fadeOut("slow");
+			});
+	}
+	function stopContainer() {
+		document.getElementById("test").innerHTML = " ";
+		$(".loader-wrapper").fadeIn("slow")
+		const containerName = document.getElementById('containerName').value
+		fetch("http://localhost:3000/stop", {
+			method: 'POST', // or 'PUT'
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ containerName }),
+		})
+			.then(response => response.json())
+			.then(data => {
+				let newP = document.createElement("p");
+				newP.innerHTML = data + " đã dừng";
+				document.getElementById("test").appendChild(newP);
+				$(".loader-wrapper").fadeOut("slow");
+			})
+	}
+
+	function getContainers() {
+		document.getElementById("test").innerHTML = "";
+		fetch("http://localhost:3000/containers")
+			.then((res) => res.json())
+			.then((data) => {
+				// let newData = data.split("\n");
+				// // newData.pop();
+				// newData.forEach((container) => {
+				// 	// const name = container.split(" ").slice(-1);
+				// 	let p = createNewElement("p", container);
+				// 	document.getElementById("test").appendChild(p);
+				// });
+				let table = document.createElement("table");
+				let tableHeader = document.createElement("tr");
+				["ID", "NAME", "CPU", "MEM USAGE / LIMIT", "MEM%", "NET I/O", "BLOCK I/O", "PIDS"].forEach(
+					(header) => {
+						const headerContent = createNewElement("th", header);
+						tableHeader.appendChild(headerContent);
+					}
+				);
+				table.appendChild(tableHeader);
+				let newData = data.split("\n");
+				newData.pop();
+				console.log((newData.slice(1)[0]).split("\t"))
+				newData.slice(1).forEach((text) => {
+					let content = text.split(" ").filter((content) => content);
+					console.log(content)
+					let newRow = document.createElement("tr");
+					[
+						content[0],
+						content[1],
+						content[2],
+						`${content[3]} ${content[4]} ${content[5]}`,
+						content[6],
+						`${content[7]} ${content[8]} ${content[9]}`,
+						`${content[10]} ${content[11]} ${content[12]}`,
+						content[13],
+					].forEach((item) => {
+						const newCol = createNewElement("td", item);
+						newRow.appendChild(newCol);
+					});
+					table.appendChild(newRow);
+				});
+				document.getElementById("test").appendChild(table);
+			});
+	}
+	function getImages() {
+		document.getElementById("test").innerHTML = "";
+		document.getElementById("test").classList.add('animate__animated', 'animate__fadeInRight');
+		fetch("http://localhost:3000/images")
+			.then((res) => res.json())
+			.then((data) => {
+				let table = document.createElement("table");
+				let tableHeader = document.createElement("tr");
+				["REPOSITORY", "TAG", "IMAGE ID", "CREATED", "SIZE"].forEach(
+					(header) => {
+						const headerContent = createNewElement("th", header);
+						tableHeader.appendChild(headerContent);
+					}
+				);
+				table.appendChild(tableHeader);
+				let newData = data.split("\n");
+				newData.pop();
+				newData.slice(1).forEach((text) => {
+					let content = text.split(" ").filter((content) => content);
+					let newRow = document.createElement("tr");
+					[
+						content[0],
+						content[1],
+						content[2],
+						`${content[3]} ${content[4]} ${content[5]}`,
+						content[6],
+					].forEach((item) => {
+						const newCol = createNewElement("td", item);
+						newRow.appendChild(newCol);
+					});
+					table.appendChild(newRow);
+				});
+				document.getElementById("test").appendChild(table);
+			});
+	}
+	function createNewElement(element, content) {
+		let newEle = document.createElement(element);
+		let newEleContent = document.createTextNode(content);
+		newEle.appendChild(newEleContent);
+		return newEle;
+	}
 </script>
+
 
 </html>
